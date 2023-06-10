@@ -5,7 +5,6 @@ from typing import List
 from models.bert_rep import *
 
 
-from src.datasets.hyperion_dataset import decode_labels
 
 # It loads the pretrained model for repertoires prediction and the tokenizer, and provides methods to extract the hidden states of
 # the model.
@@ -33,7 +32,7 @@ class BertRep():
         logits = logits.detach().cpu()
         probs = logits.softmax(dim=1)
         preds = probs.argmax(dim=1)
-        return decode_labels(preds).tolist()
+        return preds
     
     def last_hidden_state_average(self, text:List[str]) -> List[str]:
         encoded_text = self.tokenizer(text,
