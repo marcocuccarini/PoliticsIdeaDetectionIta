@@ -4,6 +4,32 @@ import torch
 from typing import List
 from models.bert_rep import *
 
+labels = [
+                'anticipazione',
+                'causa',
+                'commento',
+                'conferma',
+                'considerazione',
+                'contrapposizione',
+                'deresponsabilizzazione',
+                'descrizione',
+                'dichiarazione di intenti',
+                'generalizzazione',
+                'giudizio',
+                'giustificazione',
+                'implicazione',
+                'non risposta',
+                'opinione',
+                'possibilità',
+                'prescrizione',
+                'previsione',
+                'proposta',
+                'ridimensionamento',
+                'sancire',
+                'specificazione',
+                'valutazione'
+        ]
+
 
 
 # It loads the pretrained model for repertoires prediction and the tokenizer, and provides methods to extract the hidden states of
@@ -32,7 +58,7 @@ class BertRep():
         logits = logits.detach().cpu()
         probs = logits.softmax(dim=1)
         preds = probs.argmax(dim=1)
-        return preds
+        return decode_labels(preds).tolist()
     
     def last_hidden_state_average(self, text:List[str]) -> List[str]:
         encoded_text = self.tokenizer(text,
@@ -168,6 +194,12 @@ class BertRep():
         #print(hs.shape)
         #.to_list()
         return hs
+
+    def decode_labels(encoded_labels):
+        
+        le = preprocessing.LabelEncoder()
+        le.fit(labels)
+        return le.inverse_transform(encoded_labels)
 
 
        
