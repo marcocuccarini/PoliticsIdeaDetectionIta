@@ -3,6 +3,8 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import torch
 from typing import List
 from models.bert_rep import *
+from sklearn import preprocessing
+
 
 labels = [
                 'anticipazione',
