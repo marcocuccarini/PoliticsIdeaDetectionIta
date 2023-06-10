@@ -31,6 +31,11 @@ labels = [
         ]
 
 
+def decode_labels(encoded_labels):
+        
+    le = preprocessing.LabelEncoder()
+    le.fit(labels)
+    return le.inverse_transform(encoded_labels)
 
 # It loads the pretrained model for repertoires prediction and the tokenizer, and provides methods to extract the hidden states of
 # the model.
@@ -195,11 +200,6 @@ class BertRep():
         #.to_list()
         return hs
 
-    def decode_labels(encoded_labels):
-        
-        le = preprocessing.LabelEncoder()
-        le.fit(labels)
-        return le.inverse_transform(encoded_labels)
 
 
        
